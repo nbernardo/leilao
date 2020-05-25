@@ -1,0 +1,73 @@
+.field-group{
+    display: flex;
+    margin-top:20px;
+}
+
+
+.field-group label{
+    display: block;
+    width: 300px;
+}
+
+
+.field-group input[type="text"],
+.field-group input[type="password"],
+.leilaoStyle
+{
+    width: 90%;
+    border: 1px solid black;
+    padding-left: 5px;
+    padding-top:7px;
+    padding-bottom:7px;
+    border-radius:3px;
+    margin-left: 0px;
+    background-color: white;
+    -moz-appearance: menulist;
+    color: black;
+}
+
+
+.field-group input[type="text"]::selection{
+    background-color:red;
+}
+
+
+.sendBtn, .cancelBtn{
+    cursor: pointer;
+    margin-left:5px;
+}
+
+.hideButton{
+    display: none;
+}
+
+.cancelBtn{
+    width:100px ;
+    border: 1px solid;
+    padding: 10px;
+    background:red;
+    color:white;
+    border-radius: 3px;
+    
+}
+
+.sendBtn{
+    width:100px ;
+    border: 1px solid;
+    padding: 10px;
+    /*background:green;*/
+    background:#0e8ce4;
+    color:white;
+    border-radius: 3px;
+}
+
+.validationErro{
+    display: none;
+    color:red;
+    font-weight: bold;
+}
+
+.inputContent{
+    width: 100%;
+}
+

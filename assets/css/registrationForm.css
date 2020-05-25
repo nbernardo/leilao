@@ -1,0 +1,34 @@
+.formContainer{
+    display: flex;
+}
+
+.formContainer section:first-child{
+    flex: 4;
+}
+
+.formContainer section:last-child{
+    flex: 1;
+    display: flex;
+    /*justify-content: center;*/
+    flex-direction: column;
+    align-items: center;
+    padding-top: 17px;
+}
+
+#imageLocal{
+    width: 100%;
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 6px;    
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.imgSelect{
+    width: 100%;
+    margin-top: 10px;
+}
+
+#imageProduto{
+    width: 63%;
+}

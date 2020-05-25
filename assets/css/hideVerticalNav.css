@@ -1,0 +1,5 @@
+.cat_menu_container ul
+{
+	visibility: hidden;
+	opacity: 0;
+}
