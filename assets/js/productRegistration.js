@@ -139,6 +139,10 @@ function callProductModal(){
     addFooterDatatable();
     loadProducts();
 
+    let prowebForm = new ProwebRequest();
+    prowebForm.formRenderPlace = "prodCaracteristicas";
+    prowebForm.loadFormTo("carro");
+
 }
 
 function addFooterDatatable(){

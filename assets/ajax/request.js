@@ -6,6 +6,7 @@ function ProwebRequest(){
     this.url = null;
     this.debugResult = false;
     modal = null;
+    this.formRenderPlace = null;
 
     this.post = function(url, sendingForm, callBack){
         
@@ -85,6 +86,43 @@ function ProwebRequest(){
     this.requestClearLoading = function(){
         if(modal != null)
             modal.innerHTML = "";
+    }
+
+
+    this.loadFormTo = function(formName,place){
+
+        let xhr = new XMLHttpRequest()
+        let finalURL =  APP_ROOT_DIR+"assets/"+formName+".json";
+        xhr.open('GET',finalURL,true);
+        xhr.send();
+        let formResult = "";
+        let _prowebForm = new ProwebForm();
+        let formRenderPlace = this.formRenderPlace;
+
+        xhr.onload = function(){
+
+            let fieldResult = JSON.parse(xhr.responseText).campos;
+
+            for(p in fieldResult){
+                
+                let c = fieldResult[p];
+                placeHolder = c.dica || "Digite um valor";
+                errorMessage = c.erroVazio || "";
+                campo = {
+                    label:p,
+                    fieldName:p,
+                    placeHolder:placeHolder,
+                    errorMessage:errorMessage,
+                    tipo:c.tipo
+                };                
+                formResult += _prowebForm.prowebField(formName,campo);
+
+            }
+
+            l("#"+formRenderPlace).innerHTML = formResult;
+
+        }
+
     }
 
     return this;

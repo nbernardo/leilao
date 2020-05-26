@@ -57,6 +57,64 @@ function ProwebForm(){
         }
         return this.result;
     }
+
+
+    this.prowebComboBox = function(formName,fieldName,placeHolder,tipo){
+        return `
+            <select 
+                    data-type="${tipo}"
+                    id="${fieldName}" 
+                    class="${formName}Input prowebAutoInput leilaoStyle"
+                    >
+                <option value="">${placeHolder}</option>
+            </select>
+        `;
+    }
+    
+    
+    this.prowebInputText = function(formName,fieldName,placeHolder,tipo){
+        return `
+            <input 
+                data-type="${tipo}"
+                type="text"
+                placeholder="${placeHolder}"
+                class="${formName}Input prowebAutoInput"
+                id="${fieldName}"
+            />
+        `;
+    }
+    
+    this.uiComponent = function(){
+        return {
+                'text' : this.prowebInputText, 
+                'combo' : this.prowebComboBox
+        };
+    }
+
+
+    this.prowebField = function(formName,{label,fieldName,placeHolder,errorMessage,tipo}){
+
+        console.log("A partir do Form component controller");
+    
+        if(errorMessage != ""){
+            errorMessage = `<div class="validationErro">${errorMessage}</div>`;
+            requred = ""
+        }
+        let tipoComp = tipo || "text";
+        
+        return `    
+                <div class="field-group">
+                    <label>${label}</label>
+                    <div class="inputContent">
+                        ${this.uiComponent()[tipoComp](formName,fieldName,placeHolder)}
+                        ${errorMessage}
+                    </div>
+                </div>
+        `;
+    
+    }
+
+
     return this;
 
 }

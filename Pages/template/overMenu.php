@@ -15,6 +15,7 @@
                                     <li><a href="#">Perfil</a></li>
                                     <li><a href="#">Loja</a></li>
                                     <li><a href="#" onclick="callProductModal()">Produtos</a></li>
+                                    <li><a href="#">Leilões</a></li>
                                     <li><a href="#" onclick="callCategoriaModal()">Categorias</a></li>
                                 </ul>
                             </li>

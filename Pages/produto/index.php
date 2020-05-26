@@ -9,9 +9,9 @@
     </h3>
 
     <nav class="tabNavigation productNavigation">
-        <div data-tab="prodFormField" class="tab active">Dados produto</div>
-        <div data-tab="prodImageField" class="tab">Imagem produto</div>
-        <!-- <div data-tab="prodCategoria" class="tab">Categoria</div> -->
+        <div data-tab="prodFormField" class="tab active">Dados</div>
+        <div data-tab="prodImageField" class="tab">Imagens</div>
+        <div data-tab="prodCaracteristicas" class="tab">Caracteristicas</div>
     </nav>
 
     <hr class="tabRow"/>
@@ -101,8 +101,13 @@
             <div id="imagensProduto">Nenhuma imagem seleccionada/inserida</div>
             
         </section>
+
+        <section id="prodCaracteristicas" class="formSection">
+        <!-- Local para carregamento dos campos de forma dinamica -->
+        </section>
         
         
+        <!-- Dados para view de categoria -->
         <div id="formCategoriaContainer">
 
             <section id="prodCategoria" class="formSection">
@@ -126,6 +131,7 @@
                 </div>
                 
             </section>
+
         </div>
 
     </form>

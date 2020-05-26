@@ -117,6 +117,7 @@ class ProdutoDTO extends AbstractDTO {
                             FROM produtos p
                             LEFT JOIN produtos_imagens pi
                             ON p.id = pi.fk_produto
+                            WHERE p.status = 1
                             GROUP BY p.nome
                          ";
 
@@ -135,6 +136,7 @@ class ProdutoDTO extends AbstractDTO {
     {
       //$findBy = !is_null($byId) ? " WHERE p.id = {$byId} " : "";
       try {
+          
  
           $queryString = "
                             SELECT 
@@ -147,6 +149,7 @@ class ProdutoDTO extends AbstractDTO {
                             FROM produtos p
                             LEFT JOIN produtos_imagens pi
                             ON p.id = pi.fk_produto WHERE p.id = '{$id}'
+                            AND p.status = 1
                          ";
 
           $query = $this->Connection()->query($queryString);
@@ -175,6 +178,7 @@ class ProdutoDTO extends AbstractDTO {
                             LEFT JOIN produtos_imagens pi
                             ON p.id = pi.fk_produto
                             WHERE p.nome LIKE '%{$param}%'
+                            AND p.status = 1
                             GROUP BY p.nome
                          ";
 

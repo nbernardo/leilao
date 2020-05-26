@@ -46,19 +46,39 @@ function minimizeChat(){
 
 function chatSendMessage(){
     let pressedKey = event.keyCode || event.charCode;
-    if(pressedKey == 13){
+
+    if(pressedKey == 13 && event.ctrlKey){
+        console.log("Helo");
+        l('#textLocal').value = l('#textLocal').value+"\r\n";
+        //l('#textLocal').value = l('#textLocal').value+"<br>Ola"
+    }
+
+    else if(pressedKey == 13){
 
         //if(!event.ctrlKey){
+            event.preventDefault();
+            let message = l('#textLocal').value;
 
-            let message = l('#textLocal').innerHTML;
+        if(message.length != ""){
+
             let messageContainer = newElement("div");
             messageContainer.className = "myMessage";
             messageContainer.innerHTML = message;
             l("#messagesLocal").appendChild(messageContainer);
-            document.getElementById("textLocal").innerHTML = "";
-            document.getElementById("textLocal").innerHTML = "";
+            
+            l('#textLocal').value = "";
 
+        }
+            
         //}
+        //while(document.getElementById('textLocal').firstChild){
+//            //console.log("Chamou");
+            //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
+            document.getElementById('textLocal').innerHTML = document.getElementById('textLocal').innerHTML.substr(0,0);
+            //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
+            //l('#textLocal').removeChild(l('#textLocal').firstChild);
+        //}
+ //       //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
 
     }
 }
@@ -75,10 +95,10 @@ function chatView(){
             <span class="minimize">--</span>
         </div>
         <div id="messagesLocal"></div>
-        <div id="textLocal" onkeypress="chatSendMessage()" contentEditable="true"></div>
+        <textarea id="textLocal" onkeypress="chatSendMessage()" contentEditable="true"></textarea>
         <button type="button">Enviar</button>
     `
 
 }
 
-createChatContainer();
+//createChatContainer();
