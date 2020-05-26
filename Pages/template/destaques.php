@@ -3,7 +3,8 @@
 							<div class="tabs">
 								<ul class="clearfix">
 									<li class="active">
-										Resultado da pesquisa
+										<?php $produtos = $facadePrincipal->produtoController()->findAllProdutosToView(isset($_POST['queryParam']) ? $_POST['queryParam'] : null); ?>
+										Resultado da pesquisa (<?php echo count($produtos); ?>)
 										<!-- Destaque -->
 									</li>
 									<!--
@@ -21,8 +22,6 @@
 									<!-- Slider Item -->
 									<?php 
 										
-										$produtos = $facadePrincipal->produtoController()->findAllProdutosToView(isset($_POST['queryParam']) ? $_POST['queryParam'] : null);
-
 										foreach($produtos as $prod){
 									?>
 									<div class="featured_slider_item">
