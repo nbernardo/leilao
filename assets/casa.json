@@ -1,0 +1,10 @@
+{
+    "campos":{
+        "Morada" : "",
+        "Nº de Quartos" : {
+            "dica" : "Informe o numero de quarto",
+            "requiredClass" : "produtoInput",
+            "erroVazio" : "Valo invalido"
+        }
+    }
+}

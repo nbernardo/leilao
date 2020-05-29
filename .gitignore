@@ -1,0 +1,8 @@
+{
+    "require": {
+        "cboden/ratchet": "^0.4.2"
+    }
+}
+assets/product_image/
+Pages/images/profile/
+vendor/

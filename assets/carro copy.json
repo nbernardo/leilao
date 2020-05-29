@@ -1,0 +1,22 @@
+{
+    "campos":{
+        "Estado": {
+            "dica" : "Ex: Novo, Usado"
+        },
+        "Tipo": {
+            "erroVazio" : "Tipo inválido de valor",
+            "requiredClass" : "produtoInput"
+        },
+        "Marca": {
+            "dica" : "Digite a marca",
+            "tipo" : "combo"
+        },
+        "Modelo" : "",
+        "Combustível": "",
+        "Cor" : "",
+        "Caixa de velocidades": "",
+        "Ano" : "",
+        "KM's": "",
+        "Segurança": ""
+    }
+}
