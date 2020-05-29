@@ -192,6 +192,11 @@ abstract class AbstractController {
         die();
 
     }
+
+
+    public static function fileSystemPath(){
+		return $_SERVER["DOCUMENT_ROOT"];
+	}
 }
 
 ?>

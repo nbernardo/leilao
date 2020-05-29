@@ -67,7 +67,10 @@ class ProdutoDTO extends AbstractDTO {
     public function setLojaId($lojaId){$this->lojaId = $lojaId;}
 
     public function getUnique_id(){return $this->unique_id;}
-    public function setUnique_id($unique_id){$this->unique_id = $unique_id;}
+    public function setUnique_id($unique_id){
+        $this->unique_id = $unique_id;
+        return $this;
+    }
 
 
     public function findAllProdutos($byId = null, $show = false)
@@ -137,7 +140,7 @@ class ProdutoDTO extends AbstractDTO {
       //$findBy = !is_null($byId) ? " WHERE p.id = {$byId} " : "";
       try {
           
- 
+          $param = addslashes($id);
           $queryString = "
                             SELECT 
                                 p.id, 
@@ -145,10 +148,14 @@ class ProdutoDTO extends AbstractDTO {
                                 p.nome, 
                                 pi.imagem,
                                 p.descricao,
-                                p.fk_categoria
+                                p.fk_categoria,
+                                pa.valor
                             FROM produtos p
                             LEFT JOIN produtos_imagens pi
-                            ON p.id = pi.fk_produto WHERE p.id = '{$id}'
+                            ON p.id = pi.fk_produto 
+                            LEFT JOIN produto_atributos pa
+                            ON p.id = pa.fk_produto
+                            WHERE p.id = '{$param}'
                             AND p.status = 1
                          ";
 

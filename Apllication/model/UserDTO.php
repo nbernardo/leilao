@@ -12,6 +12,7 @@ class UserDTO extends AbstractDTO {
     public $email;
     public $password;
     public $imagemPerfil;
+    public $tipoConta;
 
     function __construct($c = __CLASS__) 
     {
@@ -102,4 +103,24 @@ class UserDTO extends AbstractDTO {
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+
+    /**
+     * Get the value of tipoConta
+     */ 
+    public function getTipoConta()
+    {
+        return $this->tipoConta;
+    }
+
+    /**
+     * Set the value of tipoConta
+     *
+     * @return  self
+     */ 
+    public function setTipoConta($tipoConta)
+    {
+        $this->tipoConta = $tipoConta;
+
+        return $this;
+    }
 }

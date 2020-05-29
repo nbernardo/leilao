@@ -1,5 +1,6 @@
 var productTable = null; //Data table dos produtos
 var productController = {editingStatus:false};
+const prodValidateInput = "produtoInput";
 
 modalFeatures = {
     footer: true,
@@ -81,15 +82,18 @@ function removeEditButton(){
 
 function registerProduct(){
 
+
     let formValidation = new ValidationInputs();
-    if(formValidation.check('produtoInput').numberOfErrors > 0){
+    if(formValidation.check(prodValidateInput).numberOfErrors > 0){
         return;
     }
 
-
     prodCreateForm = new ProwebForm();
+
     prodCreateForm.adicionaAllFields('produtoInput');
     prodCreateForm.adicionaExtraFields('imageInput');
+    prodCreateForm.processAutoFields("field[ProdutoAtributo.valor]");
+    
     //console.log(prodCreateForm.fieldList);
     
     let request = new ProwebRequest();
@@ -111,11 +115,9 @@ function generateTableRows(dataString){
 
 function onRegisterSuccess(result){
     
-    //alert(result);
-
     resultado = JSON.parse(result);
     if(resultado.success != undefined){
-        console.log("Retorno: ",resultado.lastData);
+        (new ProwebForm()).clearAutoFields();
         try{
             firstImage = getFirstAndclearSavedImages();
             resultado.lastData["mainImage"] = firstImage;            
@@ -370,57 +372,83 @@ function ProdutoController(){
 
     this.editar = function(produto){
 
-        console.log("Cat : "+JSON.stringify(produto));
+        //console.log("Cat : "+JSON.stringify(produto));
 
         this.editingStatus = true;
         this.designacao.value = produto.nome;
         this.preco.value = produto.preco.replace(/,/g,"").replace(/\./g,"");
-        this.descricao.value = "";//produto.descricao; 
+        this.descricao.value = produto.descricao; 
         this.idProduct = produto.id;
         this.categoria.value = produto.categoria;
-        aditingImages(produto.id);
+        (new ProwebForm()).clearAutoFields();
+        findAllData(produto.id);
 
     }
 
-    aditingImages = function(idProduct){
+    loadAutoField = function(autoData){
+        
+        try{
+            let fields = JSON.parse(autoData[0].valor.replace(/&quot;/g,"\""));
+            
+            for(c in fields.campos){
+                try{
+                    l('#'+c).value = fields.campos[c];
+                }catch(e){}
+                
+            }
+        }catch(e){}
+        
+    }
+
+    addImages = function(imagens,idProduct){
+
+        if(imagens != undefined || imagens != ""){
+            imagens.forEach((i,x) => {
+
+                let imagem = {"result" :  APP_ROOT_DIR+"assets/product_image/"+i.imagem};
+                let file = {"type": "image", "name": "Imagem produto", "idProduto": idProduct};
+                createAndAddImage(file,x,imagem);
+            });
+        }
+
+    }
+
+    findAllData = function(idProduct){
 
         let prodCreateForm = new ProwebForm();
         prodCreateForm.addProwebField('ProdutosImagem.fk_produto',idProduct);
+        prodCreateForm.addProwebField('ProdutoAtributo.fk_produto',idProduct);
         
         let request = new ProwebRequest();
         request.url = GATEWAY+"?controller=Produto&method=findImagens";
         request.debugResult = true;
         request.requestLoading("productFormModal");
         request.post(null,prodCreateForm.result,function(r){
-
+            
             let resultado = JSON.parse(r);
-            if(resultado.dados != undefined){
-                resultado.dados.forEach((i,x) => {
 
-                    let imagem = {"result" :  APP_ROOT_DIR+"assets/product_image/"+i.imagem};
-                    let file = {"type": "image", "name": "Imagem produto", "idProduto": idProduct};
+            addImages(resultado.imagens,idProduct);
+            loadAutoField(resultado.atributo);
 
-                    createAndAddImage(file,x,imagem);
-
-                });
-            } 
+            //alert(r); 
         });
     }
 
+    
+
 
     this.actualizar = function(){
-        updateResult = {success: false};
+        
         let formValidation = new ValidationInputs();
-        if(formValidation.check('produtoInput').numberOfErrors > 0){
+        if(formValidation.check(prodValidateInput).numberOfErrors > 0){
             return;
         }
     
-        let setResult = function(r){ updateResult = r; }
-
         prodCreateForm = new ProwebForm();
         prodCreateForm.adicionaAllFields('produtoInput');
         prodCreateForm.adicionaExtraFields('imageInput');
         prodCreateForm.addProwebField('Produto.id',this.idProduct);
+        prodCreateForm.processAutoFields("field[ProdutoAtributo.valor]");
         
         let request = new ProwebRequest();
         request.url = GATEWAY+"?controller=Produto&method=update";
@@ -434,10 +462,10 @@ function ProdutoController(){
                 addDefaultButtons();
 
                 prodCreateForm.clearAllFields();
+                prodCreateForm.clearAutoFields();
                 this.updateViewProduct(prodCreateForm.fieldList,result.preco);        
             }
         });
-        return updateResult;
     }
 
     this.updateViewProduct = function(form,preco){
@@ -446,33 +474,39 @@ function ProdutoController(){
         l("#viewProdPreco"+this.idProduct).innerHTML = preco;
         let prodId = this.idProduct;
         l("#viewProdLink"+this.idProduct).onclick = function(){
-            editarProduto(form.produtoNome,form.produtoPreco,form.produtoDescricao,prodId,form.produtoCategoria);
+            
+            editarProduto(form.produtoNome,
+                          form.produtoPreco,
+                          form.produtoDescricao,
+                          prodId,
+                          form.produtoCategoria);
         }
     }
+    
 
     return this;
 
 }
 
 function editarProduto(nome,preco,descricao,id,categoria){
+
+    console.log("Resgatando: ",descricao);
     let obj = {
         nome: nome,
         preco: preco,
-        descricao: descricao,
+        descricao: document.getElementById("viewProdLink"+id).dataset.descricao,
         id : id,
         categoria : categoria
     }
     document.getElementById("imagensProduto").innerHTML = "";    
-    //removeDefaultButtons();
     addEditButton();
 
-    //console.log(cur);
     productController = new ProdutoController();
     productController.editar(obj);
 }
 
 function actualizar(){
-    if(productController.actualizar().success){
+    if(productController.actualizar()){
 
     }
 }

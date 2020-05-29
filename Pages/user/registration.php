@@ -26,6 +26,19 @@
             </div>
 
             <div class="field-group">
+                <label>Tipo de conta *</label>
+                <div class="inputContent">
+                    <select class="processInput registrationInput leilaoStyle ajustedCombo" id="tipoConta" name="field[User.tipoConta]">
+                        <option value="">Selecione</option>
+                        <option value="COMPRADOR">Comprador</option>
+                        <option value="VENDEDOR">Vendedor</option>
+                        <option value="COMPRADOR_VENDEDOR">Comprador e Vendedor</option>
+                    </select>
+                    <div class="validationErro">Selecione o tipo de conta</div>
+                </div>
+            </div>
+
+            <div class="field-group">
                 <label>Email *</label>
                 <div class="inputContent">
                     <input id="userEmail" class="processInput registrationInput"  placeholder="Email pessoal" type="text" name="field[User.email]"/>

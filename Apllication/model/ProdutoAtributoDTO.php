@@ -7,10 +7,10 @@
 class ProdutoAtributoDTO extends AbstractDTO {
 
 public $id;
-public $atributo;
+public $atributo = 0;
 public $valor;
 public $fk_produto;
-public $status;
+public $status = 0;
 
 public $table = 'produto_atributos';
 
@@ -27,7 +27,10 @@ public function getValor(){   return $this->valor;}
 public function setValor($valor){ $this->valor = $valor; }
 
 public function getFk_produto(){   return $this->fk_produto;}
-public function setFk_produto($fk_produto){ $this->fk_produto = $fk_produto; }
+public function setFk_produto($fk_produto){ 
+    $this->fk_produto = $fk_produto;
+    return $this; 
+}
 
 public function getStatus(){   return $this->status;}
 public function setStatus($status){ $this->status = $status; }

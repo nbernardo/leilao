@@ -113,7 +113,8 @@ function ProwebRequest(){
                     fieldName:p,
                     placeHolder:placeHolder,
                     errorMessage:errorMessage,
-                    tipo:c.tipo
+                    tipo:c.tipo,
+                    requiredClass:c.requiredClass,
                 };                
                 formResult += _prowebForm.prowebField(formName,campo);
 

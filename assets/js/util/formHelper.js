@@ -1,4 +1,4 @@
-
+autoFields = {campos:{}};
 
 function ProwebForm(){
 
@@ -26,6 +26,7 @@ function ProwebForm(){
         return document.querySelectorAll('.'+_class);
     }
     
+    
     this.adicionaAllFields = function(_fields){
         sendingForm = getForm();
         this.allFields = getFields(_fields);
@@ -37,11 +38,28 @@ function ProwebForm(){
         }
         this.result = sendingForm;
     }
+    
+
+    this.processAutoFields = function(backgendField){
+        
+        let sendingForm = getForm();
+        let allFields = getFields("prowebAutoInput");
+
+        if(allFields.length > 0){
+            
+            allFields.forEach(f => {
+                autoFields.campos[f.id] = f.value;
+            });
+
+        }
+        sendingForm.append(backgendField,JSON.stringify(autoFields));
+        this.result = sendingForm;
+    }
+
 
     this.clearAllFields = function(){
         
         for(_field of this.allFields){
-            console.log("Limpar campo: ",_field.id);
             _field.value = "";
         }     
     }
@@ -59,12 +77,12 @@ function ProwebForm(){
     }
 
 
-    this.prowebComboBox = function(formName,fieldName,placeHolder,tipo){
+    this.prowebComboBox = function(formName,fieldName,placeHolder,tipo,requiredInput){
         return `
             <select 
                     data-type="${tipo}"
-                    id="${fieldName}" 
-                    class="${formName}Input prowebAutoInput leilaoStyle"
+                    id="__autoField${fieldName}" 
+                    class="${requiredInput} ${formName}Input prowebAutoInput leilaoStyle"
                     >
                 <option value="">${placeHolder}</option>
             </select>
@@ -72,14 +90,14 @@ function ProwebForm(){
     }
     
     
-    this.prowebInputText = function(formName,fieldName,placeHolder,tipo){
+    this.prowebInputText = function(formName,fieldName,placeHolder,tipo,requiredInput){
         return `
             <input 
                 data-type="${tipo}"
                 type="text"
                 placeholder="${placeHolder}"
-                class="${formName}Input prowebAutoInput"
-                id="${fieldName}"
+                class="${requiredInput} ${formName}Input prowebAutoInput"
+                id="__autoField${fieldName}"
             />
         `;
     }
@@ -92,26 +110,41 @@ function ProwebForm(){
     }
 
 
-    this.prowebField = function(formName,{label,fieldName,placeHolder,errorMessage,tipo}){
+    this.prowebField = function(formName,
+                                {label,fieldName,placeHolder,errorMessage,tipo,requiredClass}
+                                ){
 
-        console.log("A partir do Form component controller");
+        requiredInput = "";
+        if(requiredClass != undefined && requiredClass != "")
+            requiredInput = requiredClass; 
     
         if(errorMessage != ""){
             errorMessage = `<div class="validationErro">${errorMessage}</div>`;
-            requred = ""
+            required = ""
         }
+
         let tipoComp = tipo || "text";
         
         return `    
                 <div class="field-group">
                     <label>${label}</label>
                     <div class="inputContent">
-                        ${this.uiComponent()[tipoComp](formName,fieldName,placeHolder)}
+                        ${this.uiComponent()[tipoComp](formName,fieldName,placeHolder,tipoComp,requiredInput)}
                         ${errorMessage}
                     </div>
                 </div>
         `;
     
+    }
+
+    /**
+     * Limpa todas as fields geradas acutomaticamente
+     */
+    this.clearAutoFields = function(){
+        let fields = document.querySelectorAll('.prowebAutoInput');
+        fields.forEach(f => {
+            f.value = "";
+        });
     }
 
 

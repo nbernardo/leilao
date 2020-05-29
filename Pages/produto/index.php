@@ -12,6 +12,7 @@
         <div data-tab="prodFormField" class="tab active">Dados</div>
         <div data-tab="prodImageField" class="tab">Imagens</div>
         <div data-tab="prodCaracteristicas" class="tab">Caracteristicas</div>
+        <div data-tab="novSection" class="tab">Documentos</div>
     </nav>
 
     <hr class="tabRow"/>
@@ -107,6 +108,10 @@
         </section>
         
         
+        <section id="novSection" class="formSection">
+            Aba dos documentos
+        </section>
+
         <!-- Dados para view de categoria -->
         <div id="formCategoriaContainer">
 
@@ -133,6 +138,7 @@
             </section>
 
         </div>
+
 
     </form>
     

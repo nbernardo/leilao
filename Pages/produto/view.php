@@ -53,8 +53,10 @@ require_once(FacadePrincipal::assetsPath()."js/util/env.php");
         <?php require_once("{$rootPath}/template/top.php"); ?> 
     </div>
 
-	<!-- Single Product -->
-
+    <!-- Single Product -->
+    <!-- 
+    Apresenta os detalhes de um determinado produto
+    -->
 	<div class="single_product">
     <?php require_once("parts/singleProduct.php") ?>
 	</div>

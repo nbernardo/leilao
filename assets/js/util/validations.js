@@ -24,8 +24,6 @@ function ValidationInputs(){
                         this.numberOfErrors = parseInt(this.numberOfErrors) + checkNumber(curField);
                     }
                 }
-                    
-                
             }
         }
         return this;

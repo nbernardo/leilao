@@ -11,11 +11,39 @@ class ProdutoController extends AbstractController {
 
 
    public function findAllProdutos(){
-
+      
       $dados = self::getDTO()->findAllProdutos();
       echo json_encode($dados);
 
    }
+
+   public function save($a)
+   {
+      
+     $files = isset($_POST['imageInput']) ? $_POST['imageInput'] : [];
+     
+     $addedImages = self::createImages($files);
+     $dto = $this->setAttributes($a);
+     
+     if(count($dto) > 1){
+        $dtoAttr = $dto["ProdutoAtributoDTO"];
+        $dto = $dto["ProdutoDTO"];   
+     }
+
+     $dto->setUnique_id(UtilController::uuid())->save();
+     $addedProduct = $dto->getAddedRecord();
+
+     if(isset($dtoAttr))
+        $dtoAttr->setFk_produto($addedProduct->id)->save(); 
+     
+     $produtJson = json_encode($addedProduct);
+
+     if(count($files) > 0)
+        self::saveImages($addedImages, $addedProduct->id);
+
+     echo "{\"success\":\"true\",\"lastData\":{$produtJson}}";
+
+  }
 
    public function update($a){
       
@@ -28,6 +56,15 @@ class ProdutoController extends AbstractController {
       }
 
       $dto = $this->setAttributes($a);
+
+      if(count($dto) > 1){
+         $dtoAttr = $dto["ProdutoAtributoDTO"];
+         $dto = $dto["ProdutoDTO"];   
+      }
+
+      if(isset($dtoAttr))
+         $dtoAttr->setFk_produto($dto->getId())->update('fk_produto'); 
+
       $dto->update();
       echo "{\"preco\": \"".number_format($dto->getPreco(),2,'.',',')."\"}";
 
@@ -35,11 +72,17 @@ class ProdutoController extends AbstractController {
 
    }
 
+
+
    public function findImagens($a){
 
-
       $dto = $this->setAttributes($a);
-      return self::json($dto->find('fk_produto'));
+      $dd = "{
+               \"imagens\": ".json_encode($dto['ProdutosImagemDTO']->find('fk_produto')).",
+               \"atributo\": ".json_encode($dto['ProdutoAtributoDTO']->find('fk_produto'))."
+            }";
+      echo $dd;
+      //return self::json($dto->find('fk_produto'));
       
    }
 
@@ -64,17 +107,11 @@ class ProdutoController extends AbstractController {
 
       $dto = $this->setAttributes($a);
 
-
       $dto->setUnique_id(UtilController::uuid());
       $dto->save();
       $categoria = $dto->getAddedRecord();
 
       return self::json($categoria);
-
-      #echo "<pre>";
-      #print_r($categoria);
-      #echo "</pre>";
-      #die();
 
    }
 
@@ -84,71 +121,8 @@ class ProdutoController extends AbstractController {
          return self::getDTO()->filterProdutos($param);
       return self::getDTO()->findAllProdutosToView();
       
-
    }
 
-    public function save($a)
-    {
-      $files = isset($_POST['imageInput']) ? $_POST['imageInput'] : [];
-      
-      $addedImages = array();
-      foreach($files as $file){
-         $nomeFicheiro = UtilController::saveB64ToImage($file,"assets/product_image/");
-         $addedImages[] = $nomeFicheiro;
-      }
-
-      $dto = $this->setAttributes($a);
-      $dto->setUnique_id(UtilController::uuid());
-      $dto->save();
-      
-      $addedProduct = $dto->getAddedRecord();
-
-      $produtJson = json_encode($addedProduct);
-
-      if(count($files) > 0)
-         self::saveImages($addedImages, $addedProduct->id);
-
-      echo "
-            {
-               \"success\":\"true\",
-               \"lastData\":{$produtJson}
-            }
-         ";
-      
-
-      #echo "<pre>";
-      #print_r($addedImages);
-      #echo "</pre>";
-      #die();
-
-
-
-      /*
-         if($dto->getStatus() == "on");
-            $dto->setStatus(1);
-         if($dto->getVenda() == "on");
-            $dto->setVenda(1);
-            $rs = $dto->save();
-            if($rs){
-              $id = $dto->getLastObject();
-         
-         $local = './storage/products/';
-         if (!file_exists($local)) mkdir($local
-         $produtoImagem = new ProdutosImagemDTO();
-         $produtoAtributo = new ProdutoAtributoDTO(
-         for($i = 0; $i<= $_POST['attr']; $i++)
-                 $produtoAtributo->setAtributo($_POST['atributo'.$i]);
-                 $produtoAtributo->setValor($_POST['valor'.$i]);
-                 $produtoAtributo->setFk_produto($id);
-                 $produtoAtributo->setStatus(1);
-                 $r = $produtoAtributo->save();
-                      //echo $
-         }
-
-        return true;
-        */
-
-   }
 
    public static function saveImages(Array $imagesObject, Int $idProduto){
 
@@ -161,6 +135,17 @@ class ProdutoController extends AbstractController {
          $dto->save();
                   
       }
+
+   }
+
+   public static function createImages(Array $files){
+
+      $addedImages = array();
+      foreach($files as $file){
+         $nomeFicheiro = UtilController::saveB64ToImage($file,"assets/product_image/");
+         $addedImages[] = $nomeFicheiro;
+      }
+      return $addedImages;
 
    }
 

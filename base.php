@@ -2,7 +2,8 @@
 <?php require_once("Apllication/core/FacadePrincipal.php"); ?>
 <?php $rootPath = FacadePrincipal::fileSystemPath(); ?>
 <?php
-
+    
+    //require $rootPath."/vendor/autoload.php";
     #echo "<pre>";
     #print_r($_SERVER);
     #echo "</pre>";

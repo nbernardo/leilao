@@ -4,19 +4,12 @@
             "dica" : "Ex: Novo, Usado"
         },
         "Tipo": {
-            "erroVazio" : "Digite o valor"
+            "erroVazio" : "Tipo inválido de valor",
+            "requiredClass" : "produtoInput"
         },
         "Marca": {
             "dica" : "Digite a marca",
             "tipo" : "combo"
-        },
-        "Modelo" : "",
-        "Combustível": "",
-        "Cor" : "",
-        "Caixa de velocidades": "",
-        "Automática" : "",
-        "Ano" : "",
-        "KM's": "",
-        "Segurança": ""
+        }
     }
 }
