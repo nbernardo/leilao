@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+    <script>
+        var SOCK_CHAT;
+        SOCK_CHAT = oi.connect("http://localhost:9005");
+
+        function enviar(){
+
+            if(event.keyCode == 13){
+                SOCK_CHAT.emit("message", document.querySelector("#mensagem").value);
+                document.querySelector("#mensagem").value = "";
+            }
+
+        }
+        
+
+    </script>
+
+    
+    <input type="text" id="mensagem" onkeypress="enviar()">
+    
+</body>
+</html>
