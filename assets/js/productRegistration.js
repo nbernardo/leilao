@@ -300,6 +300,36 @@ function selectProductFile(){
 }
 
 
+function selectProductDocs(){
+
+    inputDocProduct = document.getElementById('inputDocumentoProduct');
+    inputDocProduct.click();
+
+    inputDocProduct.onchange = function(){
+
+        let listFiles = "";
+        let files = inputDocProduct.files;
+        for(file in files){
+
+            if(/^application\/pdf/.test(files[file].type)){
+
+                listFiles += `
+                    <tr class="productTableImageHead">
+                        <td style="font-weight:initial;">X</td>
+                        <td style="font-weight:initial;">${files[file].name}</td>
+                        <td style="font-weight:initial;">${files[file].size} Kb</td>
+                    </tr>
+                `;
+                //console.log(`Ficheiro com nome ${files[file].name}`);
+            }
+
+        }
+        l('#documentList').innerHTML = listFiles;
+        
+    }
+}
+
+
 
 function setModalFeature(){
 

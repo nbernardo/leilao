@@ -214,3 +214,14 @@
     background:#b2c9e1;
 
 }
+
+
+#chatIframe{
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    right: 0;
+    width: 19.5%;
+    border: none;
+    height: 100%;
+}

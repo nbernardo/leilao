@@ -127,7 +127,7 @@ function ProwebForm(){
         
         return `    
                 <div class="field-group">
-                    <label>${label}</label>
+                    <label>${label.replace(/\_/g," ")}</label>
                     <div class="inputContent">
                         ${this.uiComponent()[tipoComp](formName,fieldName,placeHolder,tipoComp,requiredInput)}
                         ${errorMessage}

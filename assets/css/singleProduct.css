@@ -1,0 +1,31 @@
+.productReatures{
+
+    display: flex;
+
+}
+
+
+.productFeature{
+    
+    border-right: 1px solid lightgray;
+    height: 100%;
+    flex: 4;
+
+}
+
+
+.product_description{
+    flex: 4;
+}
+
+.featureLine{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid lightgray;
+    width: 90%;
+}
+
+
+.productFeature  div:last-child{
+    border: none;
+}

@@ -10,7 +10,7 @@ function l(id){
     return document.querySelector(id);
 }
 
-function newElement(el){
+/* function newElement(el){
     return document.createElement(el);
 }
 
@@ -34,7 +34,6 @@ function createChatContainer(){
 
     document.body.appendChild(chatDiv);
     
-
 }
 
 function minimizeChat(){
@@ -55,30 +54,21 @@ function chatSendMessage(){
 
     else if(pressedKey == 13){
 
-        //if(!event.ctrlKey){
-            event.preventDefault();
-            let message = l('#textLocal').value;
+        event.preventDefault();
+        let message = l('#textLocal').value;
 
         if(message.length != ""){
 
+            sendBackMessage(message);
             let messageContainer = newElement("div");
             messageContainer.className = "myMessage";
             messageContainer.innerHTML = message;
-            l("#messagesLocal").appendChild(messageContainer);
-            
+            l("#messagesLocal").appendChild(messageContainer);            
             l('#textLocal').value = "";
 
         }
             
-        //}
-        //while(document.getElementById('textLocal').firstChild){
-//            //console.log("Chamou");
-            //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
-            document.getElementById('textLocal').innerHTML = document.getElementById('textLocal').innerHTML.substr(0,0);
-            //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
-            //l('#textLocal').removeChild(l('#textLocal').firstChild);
-        //}
- //       //document.getElementById('textLocal').removeChild(document.getElementById('textLocal').firstChild);
+        document.getElementById('textLocal').innerHTML = document.getElementById('textLocal').innerHTML.substr(0,0);
 
     }
 }
@@ -101,4 +91,21 @@ function chatView(){
 
 }
 
-//createChatContainer();
+
+function sendBackMessage(value){
+    
+    SOCK_CHAT.emit('message', value);
+
+    SOCK_CHAT.on('message', (m) => {
+        alert("Nova mensagem: "+m);
+    });
+}
+
+callAything = function(v){
+    alert(v);
+}
+
+doAll = function(){
+    confirm("Digite o seu nome");
+}
+createChatContainer(); */

@@ -14,7 +14,14 @@ function ProwebTab(){
         tabs = tabBtnContainer.getElementsByTagName("div");
         for(tab of tabs){
             let curId = tab.dataset.tab;
+            let clickEvent = tab.dataset.click;
             tab.onclick = function(){
+
+                if(clickEvent != undefined){
+                    eval(clickEvent);
+                }
+
+
                 selectTab(curId,tabs);
             }
         }
