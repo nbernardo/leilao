@@ -109,7 +109,54 @@
         
         
         <section id="novSection" class="formSection">
-            Aba dos documentos
+
+            <div class="field-group">
+                    <label>Documentos</label>
+                    <input 
+                           type="button" 
+                           onclick="selectProductDocs()" 
+                           class="sendBtn imgSelect"
+                           value="Selecionar Documento"
+                    >
+            </div>
+
+            <input 
+                type="hidden"
+                value=""
+                class="processInput"
+                name="field[Produto.imagem]"
+                id="Produto.imagem"
+            />
+
+            <input 
+                type="file" 
+                multiple="multiple"
+                style="display:none;"
+                id="inputDocumentoProduct" 
+                name="inputDocumentoProduct">
+
+            <div id="imagensProduto">
+            
+            <table class="normalDatatable" border="1">
+
+                <thead>
+                    <tr class="productTableImageHead">
+                        <td colspan="4">Lista de documentos</td>
+                    </tr>
+                    <tr class="productTableImageHead">
+                        <td>Eliminar</td>
+                        <td>Nome</td>
+                        <td>Peso</td>
+                    </tr>
+                </thead>
+
+                <tbody id="documentList">
+                </tbody>
+
+            </table>
+
+            </div>
+        
         </section>
 
         <!-- Dados para view de categoria -->
