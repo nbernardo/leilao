@@ -116,7 +116,7 @@
                            type="button" 
                            onclick="selectProductDocs()" 
                            class="sendBtn imgSelect"
-                           value="Selecionar Documento"
+                           value="Adicionar Documento"
                     >
             </div>
 
@@ -137,23 +137,23 @@
 
             <div id="imagensProduto">
             
-            <table class="normalDatatable" border="1">
+                <table class="normalDatatable" border="1">
 
-                <thead>
-                    <tr class="productTableImageHead">
-                        <td colspan="4">Lista de documentos</td>
-                    </tr>
-                    <tr class="productTableImageHead">
-                        <td>Eliminar</td>
-                        <td>Nome</td>
-                        <td>Peso</td>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr class="productTableImageHead">
+                            <td colspan="4">Lista de documentos</td>
+                        </tr>
+                        <tr class="productTableImageHead">
+                            <td>Eliminar</td>
+                            <td>Nome</td>
+                            <td>Peso</td>
+                        </tr>
+                    </thead>
 
-                <tbody id="documentList">
-                </tbody>
+                    <tbody id="documentList">
+                    </tbody>
 
-            </table>
+                </table>
 
             </div>
         

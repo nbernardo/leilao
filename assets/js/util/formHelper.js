@@ -61,6 +61,7 @@ function ProwebForm(){
         
         for(_field of this.allFields){
             _field.value = "";
+            _field.type = "text";
         }     
     }
 
@@ -70,7 +71,10 @@ function ProwebForm(){
         for(_field of allFields){
             if(_field.name != undefined && _field.value != ""){
                 this.fieldList[_field.id] = _field.value;
-                this.result.append(_field.name,_field.value);
+                if(_field.type == "file")
+                    this.result.append(_field.name,_field.files[0],_field.files[0].name);
+                else
+                    this.result.append(_field.name,_field.value);
             }
         }
         return this.result;

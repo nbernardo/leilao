@@ -17,6 +17,23 @@ class ProdutoController extends AbstractController {
 
    }
 
+   public function savePDFDoc($listDocs,$idProduto){
+
+      $dto = new ProdutoDocumentoDTO();
+      foreach($listDocs["docInput"]["name"] as $x => $doc){
+
+         $fileContent = $listDocs["docInput"]["tmp_name"][$x];
+         $fileName = $listDocs["docInput"]["name"][$x];
+         move_uploaded_file($fileContent,"assets/product_doc/".$fileName);
+
+         $dto->setFk_produto($idProduto);
+         $dto->setNome($fileName);
+         $dto->save();
+         
+      }
+
+   }
+
    public function save($a)
    {
       
@@ -34,13 +51,17 @@ class ProdutoController extends AbstractController {
      $addedProduct = $dto->getAddedRecord();
 
      if(isset($dtoAttr))
-        $dtoAttr->setFk_produto($addedProduct->id)->save(); 
+        $dtoAttr->setFk_produto($addedProduct->id)->save();; 
      
      $produtJson = json_encode($addedProduct);
 
      if(count($files) > 0)
         self::saveImages($addedImages, $addedProduct->id);
 
+      if(isset($_FILES["docInput"]))
+         $this->savePDFDoc($_FILES, $addedProduct->id);
+
+         
      echo "{\"success\":\"true\",\"lastData\":{$produtJson}}";
 
   }
@@ -77,9 +98,14 @@ class ProdutoController extends AbstractController {
    public function findImagens($a){
 
       $dto = $this->setAttributes($a);
+      $docDto = new ProdutoDocumentoDTO;
+
+      $docs = $docDto->setFk_produto($dto['ProdutosImagemDTO']->getFk_produto());      
+
       $dd = "{
                \"imagens\": ".json_encode($dto['ProdutosImagemDTO']->find('fk_produto')).",
-               \"atributo\": ".json_encode($dto['ProdutoAtributoDTO']->find('fk_produto'))."
+               \"atributo\": ".json_encode($dto['ProdutoAtributoDTO']->find('fk_produto')).",
+               \"docs\": ".json_encode($docs->find('fk_produto'))."
             }";
       echo $dd;
       //return self::json($dto->find('fk_produto'));
@@ -132,6 +158,21 @@ class ProdutoController extends AbstractController {
       foreach($imagesObject as $image) {
 
          $dto->setImagem($image["nome"]);
+         $dto->save();
+                  
+      }
+
+   }
+
+
+   public static function saveFiles(Array $docsObject, Int $idProduto){
+
+      $dto = new ProdutoDocumentoDTO();
+      $dto->setFk_produto($idProduto);
+
+      foreach($docsObject as $image) {
+
+         $dto->setNome($image["nome"]);
          $dto->save();
                   
       }

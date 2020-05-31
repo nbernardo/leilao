@@ -92,6 +92,7 @@ function registerProduct(){
 
     prodCreateForm.adicionaAllFields('produtoInput');
     prodCreateForm.adicionaExtraFields('imageInput');
+    prodCreateForm.adicionaExtraFields('docInput');
     prodCreateForm.processAutoFields("field[ProdutoAtributo.valor]");
     
     //console.log(prodCreateForm.fieldList);
@@ -114,6 +115,7 @@ function generateTableRows(dataString){
 }
 
 function onRegisterSuccess(result){
+    //alert(result);
     
     resultado = JSON.parse(result);
     if(resultado.success != undefined){
@@ -126,6 +128,7 @@ function onRegisterSuccess(result){
         let row = productTable.createProductRow(resultado.lastData);
         productTable.addRow(row);
         prodCreateForm.clearAllFields();
+        l('#documentList').innerHTML = "";
 
     }
 }
@@ -299,36 +302,56 @@ function selectProductFile(){
     }
 }
 
-
+docInputIndex = 0;
 function selectProductDocs(){
-
-    inputDocProduct = document.getElementById('inputDocumentoProduct');
-    inputDocProduct.click();
-
-    inputDocProduct.onchange = function(){
-
-        let listFiles = "";
-        let files = inputDocProduct.files;
-        for(file in files){
-
-            if(/^application\/pdf/.test(files[file].type)){
-
-                listFiles += `
-                    <tr class="productTableImageHead">
-                        <td style="font-weight:initial;">X</td>
-                        <td style="font-weight:initial;">${files[file].name}</td>
-                        <td style="font-weight:initial;">${files[file].size} Kb</td>
-                    </tr>
-                `;
-                //console.log(`Ficheiro com nome ${files[file].name}`);
-            }
-
-        }
-        l('#documentList').innerHTML = listFiles;
-        
-    }
+    createDocInput(++docInputIndex);
 }
 
+function createDocInput(index){
+
+    let fileIndex = index;
+    let docInput = document.createElement("input");
+    docInput.id = "docInput"+fileIndex;
+    docInput.type = "file";
+    docInput.style.display = "none";
+    docInput.name = "docInput[]";
+
+    docInput.setAttribute("class","docInput");
+
+    document.querySelector("#novSection").appendChild(docInput);
+    
+    docInput.onchange = function(){
+        addDocFile(docInput, fileIndex);
+    } 
+    
+    docInput.click();
+
+}
+
+function addDocFile(_input, index){
+    
+    let inputDocProduct = _input;
+    let listFiles = "";
+    let files = inputDocProduct.files;
+
+    for(file in files){
+
+        if(/^application\/pdf/.test(files[file].type)){
+
+            let row = document.createElement("tr");
+            row.className = "productTableImageHead";
+
+            row.innerHTML = `
+                    <td style="font-weight:initial;"><a href="#" onclick="alert('${index}')">X</a></td>
+                    <td style="font-weight:initial;">${files[file].name}</td>
+                    <td style="font-weight:initial;">${files[file].size} Kb</td>
+            `;
+            l('#documentList').appendChild(row);
+        }
+
+    }
+
+}
 
 
 function setModalFeature(){
@@ -349,7 +372,13 @@ function removeCloseButton(){
 }
 
 function getFirstAndclearSavedImages(){
-    let firstImage = document.querySelector(".imageInput").value;
+    
+    let firstImage;
+
+    try{
+        firstImage = document.querySelector(".imageInput").value;
+    }catch(e){}
+    
     var removeBtns = document.querySelectorAll(".btnExcluir");
     for(btn of removeBtns){
         btn.click();
@@ -459,12 +488,33 @@ function ProdutoController(){
 
             addImages(resultado.imagens,idProduct);
             loadAutoField(resultado.atributo);
+            loadDocs(resultado.docs);
+            
 
             //alert(r); 
         });
     }
 
-    
+
+    loadDocs = function(docs){
+
+        l('#documentList').innerHTML = "";
+
+        for(doc in docs){
+            console.log(docs[doc]);
+            let row = document.createElement("tr");
+            row.className = "productTableImageHead";
+            row.id = "docLine"+docs[doc].id;
+
+            row.innerHTML = `
+                    <td style="font-weight:initial;"><a href="#" onclick="alert('${docs[doc].id}')">X</a></td>
+                    <td style="font-weight:initial;"><a href="${APP_ROOT_DIR}/assets/product_doc/${docs[doc].nome}" download>${docs[doc].nome}</a></td>
+                    <td style="font-weight:initial;"><!--  Kb --></td>
+            `;
+            l('#documentList').appendChild(row);
+        }
+
+    }
 
 
     this.actualizar = function(){
@@ -493,6 +543,7 @@ function ProdutoController(){
 
                 prodCreateForm.clearAllFields();
                 prodCreateForm.clearAutoFields();
+                getFirstAndclearSavedImages();
                 this.updateViewProduct(prodCreateForm.fieldList,result.preco);        
             }
         });

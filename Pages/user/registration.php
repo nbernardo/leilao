@@ -110,8 +110,8 @@
             <div class="field-group">
                 <label>Nome completo *</label>
                 <div class="inputContent">
-                    <input onkeyup="enterPressLogin()" class="processInput loginInput" placeholder="Conta de email" type="text" id="userName" name="field[User.email]"/>
-                    <div class="validationErro">Informe o seu email</div>
+                    <input onkeyup="enterPressLogin()" class="processInput loginInput" placeholder="Utilizador ou Conta de email" type="text" id="userName" name="field[User.email]"/>
+                    <div class="validationErro">Informe o seu email/utilizador</div>
                 </div>
             </div>
 

@@ -1,3 +1,4 @@
+<?php require_once("{$rootPath}/Pages/template/chat.php"); ?>
 <!-- Top Bar -->
 <div class="top_bar">
     <div class="container">
@@ -12,11 +13,17 @@
                             <li>
                                 <a href="#" style="color:white;">Minha Conta<i class="fas fa-chevron-down"></i></a>
                                 <ul>
+                                    <?php if($_SESSION['user']->tipoConta != "ADMIN"){ ?>
                                     <li><a href="#">Perfil</a></li>
+                                    <?php } ?>
+                                    <?php if($_SESSION['user']->tipoConta == "VENDEDOR" || $_SESSION['user']->tipoConta == "COMPRADOR_VENDEDOR"){ ?>
                                     <li><a href="#">Loja</a></li>
+                                    <?php } ?>
                                     <li><a href="#" onclick="callProductModal()">Produtos</a></li>
                                     <li><a href="#">Leilões</a></li>
+                                    <?php if($_SESSION['user']->tipoConta == "ADMIN"){ ?>
                                     <li><a href="#" onclick="callCategoriaModal()">Categorias</a></li>
+                                    <?php } ?>
                                 </ul>
                             </li>
                             <?php } ?>
@@ -38,7 +45,10 @@
                             <div><a href="#" onclick="regModal()">Criar conta</a></div>
                             <div><a href="#" onclick="loginModalShow()">Entrar</a></div>
                         <?php }else{ ?>
-                            <div><a href="<?php echo FacadePrincipal::baseURL(); ?>controllerGateway.php?controller=User&method=sair">Sair</a></div>
+                            <div>
+                                <?php echo $_SESSION['user']->nome." | " ?>
+                                <a href="<?php echo FacadePrincipal::baseURL(); ?>controllerGateway.php?controller=User&method=sair">Sair</a>
+                            </div>
                         <?php } ?>    
                     </div>
                 </div>

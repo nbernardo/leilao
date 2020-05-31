@@ -26,6 +26,23 @@ class UtilController {
 
     }
 
+    public static function saveB64ToPDF($imageFile, $savePath){
+
+        $nomeImagem = self::uuid();
+        
+        $imagem = str_replace("data:application/pdf;base64,","",$imageFile);
+        
+        $file = fopen("{$savePath}{$nomeImagem}.pdf","wb");
+        fwrite($file,base64_decode($imagem));
+        fclose($file);
+        
+        return [
+                "nome" => $nomeImagem.".pdf",
+                "tipo" => "pdf"
+            ]; 
+
+    }
+
 
     public static function uuid(){
         $data = random_bytes(16);
