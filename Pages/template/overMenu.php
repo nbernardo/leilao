@@ -1,4 +1,4 @@
-<?php require_once("{$rootPath}/Pages/template/chat.php"); ?>
+<?php require_once(FacadePrincipal::fileSystemPath()."/Pages/template/chat.php"); ?>
 <!-- Top Bar -->
 <div class="top_bar">
     <div class="container">
@@ -14,15 +14,22 @@
                                 <a href="#" style="color:white;">Minha Conta<i class="fas fa-chevron-down"></i></a>
                                 <ul>
                                     <?php if($_SESSION['user']->tipoConta != "ADMIN"){ ?>
-                                    <li><a href="#">Perfil</a></li>
+                                        <li><a href="#">Perfil</a></li>
                                     <?php } ?>
+
                                     <?php if($_SESSION['user']->tipoConta == "VENDEDOR" || $_SESSION['user']->tipoConta == "COMPRADOR_VENDEDOR"){ ?>
-                                    <li><a href="#">Loja</a></li>
+                                        <li><a href="#">Loja</a></li>
+                                        <li><a href="#" onclick="callProductModal()">Produtos</a></li>
                                     <?php } ?>
-                                    <li><a href="#" onclick="callProductModal()">Produtos</a></li>
                                     <li><a href="#">Leilões</a></li>
+                                    
+                                    <?php if($_SESSION['user']->tipoConta == "COMPRADOR"){ ?>
+                                        <li><a href="#" onclick="">Produtos</a></li>
+                                    <?php } ?>
+
                                     <?php if($_SESSION['user']->tipoConta == "ADMIN"){ ?>
-                                    <li><a href="#" onclick="callCategoriaModal()">Categorias</a></li>
+                                        <li><a href="#" onclick="callProductModal()">Produtos</a></li>
+                                        <li><a href="#" onclick="callCategoriaModal()">Categorias</a></li>
                                     <?php } ?>
                                 </ul>
                             </li>

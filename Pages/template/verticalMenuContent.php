@@ -14,12 +14,14 @@
                             ?>
                             <li><a href="#"><?php echo $cat->nome; ?> <i class="fas fa-chevron-right ml-auto"></i></a></li>
                             <?php } ?>
+                            <!--
                             <li><a href="#">Automoveis<i class="fas fa-chevron-right"></i></a></li>
                             <li><a href="#">Motociclos<i class="fas fa-chevron-right"></i></a></li>
                             <li><a href="#">Casa<i class="fas fa-chevron-right"></i></a></li>
                             <li><a href="#">Electrodomesticos<i class="fas fa-chevron-right"></i></a></li>
                             <li><a href="#">Móveis de Decoração<i class="fas fa-chevron-right"></i></a></li>
                             <li><a href="#">Accessorios<i class="fas fa-chevron-right"></i></a></li>
+                            -->
                         </ul>
                     </div>
 

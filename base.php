@@ -122,7 +122,17 @@ require_once(FacadePrincipal::assetsPath()."js/util/env.php");
     TO BE REMOVED
 -->
 <?php require_once("{$rootPath}/Pages/user/registration.php") ?>
-<?php require_once("{$rootPath}/Pages/produto/index.php") ?>
+
+<?php
+
+if($_SESSION['user']->tipoConta == "VENDEDOR")
+    require_once("{$rootPath}/Pages/produto/index.php"); 
+    
+if($_SESSION['user']->tipoConta == "ADMIN")
+    require_once("{$rootPath}/Pages/produto/viewAdmin.php");
+
+
+?>
 
 <!-- 
     END OF TO BE REMOVED

@@ -25,7 +25,7 @@ function ProwebTable(){
             let descricao = `${a.descricao}`;
             let imagem = a.imagem;
             console.log(descricao);
-            tableRows += generateProductRow1(id,nome,preco,categoria,descricao,imagem);
+            tableRows += generateProductRow1(id,nome,preco,categoria,descricao,imagem,a.status);
         });
 
         document.getElementById(this.tableId).innerHTML = tableRows;
@@ -34,15 +34,26 @@ function ProwebTable(){
 
     generateProductRow1 = function(id,nome,preco,categoria,descricao,imagem){
         
+        let editLink = `    
+        <a href="#"
+            data-descricao="${descricao}" 
+            id="viewProdLink${id}"
+            onclick="editarProduto('${nome}','${preco}','${descricao}','${id}','${categoria}')"
+            >
+            Modificar
+        </a>
+        `;
+
+        let approvLink = `Aprovar<br/><input type="checkbox" value="${id}" onclick="approvProduct('${id}')"/>`;
+
+        showLink = USER_PROFILE == "ADMIN" ? approvLink : editLink;
+
         return `
-            <tr align="center" class="dataRow">
+            <tr align="center" id="approvingProduct${id}" class="dataRow">
                 <td>
-                    <div>X</div>
+                    <div></div>
                     <div>
-                        <a href="#"
-                           data-descricao="${descricao}" 
-                           id="viewProdLink${id}"
-                           onclick="editarProduto('${nome}','${preco}','','${id}','${categoria}')">Modificar</a>
+                        ${showLink}
                     </div>
                 </td>
                 <td>
@@ -83,15 +94,26 @@ function ProwebTable(){
         let descricao = curObject.descricao;
         //let obj = eval(JSON.stringify(rowData)); 
 
+        let editLink = `    
+            <a href="#"
+                data-descricao="${descricao}" 
+                id="viewProdLink${id}"
+                onclick="editarProduto('${nome}','${preco}','${descricao}','${id}','${categoria}')"
+                >
+                Modificar
+            </a>
+        `;
+
+        let approvLink = `Aprovar<br/><input type="checkbox" value="${id}"/>`;
+
+        showLink = USER_PROFILE == "ADMIN" ? approvLink : editLink;
+
         return `
             <tr align="center" class="dataRow">
                 <td>
-                    <div>X</div>
+                    <div></div>
                     <div>
-                        <a href="#"
-                           data-descricao="${descricao}" 
-                           id="viewProdLink${id}"
-                           onclick="editarProduto('${nome}','${preco}','${descricao}','${id}','${categoria}')">Modificar</a>
+                        ${approvLink}
                     </div>
                 </td>
                 <td>
@@ -127,7 +149,7 @@ function ProwebTable(){
 
         row.innerHTML = `
                     <td>
-                        <div>X</div>
+                        <div></div>
                         <div>
                             <a 
                                 href="#"

@@ -30,9 +30,9 @@
             </div>
 
             <div class="field-group">
-                <label>Preço *</label>
+                <label>Preço mínimo *</label>
                 <div class="inputContent">
-                    <input class="produtoInput requiredInput" placeholder="Preço do produto" data-type="number" type="text" id="produtoPreco" name="field[Produto.preco]"/>
+                    <input class="produtoInput requiredInput" placeholder="Preço mínimo do produto" data-type="number" type="text" id="produtoPreco" name="field[Produto.preco]"/>
                     <div class="validationErro">Inform preço do produto</div>
                     <div class="validationErro invaliTypeError">Digite um valor numérico</div>
 
@@ -159,34 +159,6 @@
         
         </section>
 
-        <!-- Dados para view de categoria -->
-        <div id="formCategoriaContainer">
-
-            <section id="prodCategoria" class="formSection">
-
-                <div class="loadingModal categoruaFormModal">
-                    Dados do modal
-                </div>
-
-                <div class="field-group">
-                    <label>Designação da categoria *</label>
-                    <div class="inputContent">
-                        <input 
-                            type="text"
-                            placeholder="Categoria de produto"
-                            class="categoriaInput"
-                            name="field[Categoria.nome]"
-                            id="Categoria.nome"
-                        />
-                        <div class="validationErro">Digite a designação da categoria</div>
-                    </div>
-                </div>
-                
-            </section>
-
-        </div>
-
-
     </form>
     
 </div>
@@ -207,7 +179,7 @@ Data table de produto do perfil logado
                 <td>Acções</td>
                 <td>Image</td>
                 <td>Designacao</td>
-                <td>Preco</td>
+                <td>Preço min</td>
             </tr>
         </thead>
 
@@ -215,32 +187,6 @@ Data table de produto do perfil logado
         </tbody>
 
     </table>
-
-</div>
-
-
-<!--
-Data table das categorias da plataforma
--->
- <div id="catDataTableContainer" style="display:none;">
-
-<table id="catDataTable" class="normalDatatable" border="1">
-
-    <thead>
-        <tr class="productTableImageHead">
-            <td colspan="4">Produtos cadastrados</td>
-        </tr>
-        <tr class="productTableImageHead">
-            <td>Acções</td>
-            <td>Id</td>
-            <td>Designação</td>
-        </tr>
-    </thead>
-
-    <tbody id="categoriaList">
-    </tbody>
-
-</table>
 
 </div>
 

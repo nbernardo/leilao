@@ -136,17 +136,35 @@ function onRegisterSuccess(result){
 
 function callProductModal(){
 
-    setModalFeature();
-    productModal.setContent(document.getElementById('produto_form').innerHTML);
-    setupTab();
-    productModal.open();
+    let productContent = USER_PROFILE == 'ADMIN' ? 'productDataTableContainer' : 'produto_form';
 
-    addFooterDatatable();
+    setModalFeature();
+    productModal.setContent(document.getElementById(productContent).innerHTML);
+    
+    if(USER_PROFILE != "ADMIN") setupTab();
+    
+    productModal.open();
+    
+    if(USER_PROFILE == "ADMIN"){
+
+        let listProdContainer = document.querySelectorAll(".tingle-modal-box__content")[1];
+        let reProdBtn = document.getElementsByClassName("productForm")[0];
+
+        reProdBtn.getElementsByTagName("button")[0].style.display = "none";
+        listProdContainer.className = listProdContainer.className+" listProductToAdmin";
+
+    } 
+
     loadProducts();
 
-    let prowebForm = new ProwebRequest();
-    prowebForm.formRenderPlace = "prodCaracteristicas";
-    prowebForm.loadFormTo("carro");
+    if(USER_PROFILE != "ADMIN"){
+        addFooterDatatable();
+        
+        let prowebForm = new ProwebRequest();
+        prowebForm.formRenderPlace = "prodCaracteristicas";
+        prowebForm.loadFormTo("carro");
+    }
+
 
 }
 
@@ -405,8 +423,10 @@ function createProductTable(){
 
 function loadProducts(data){
 
+    let method = USER_PROFILE == "ADMIN" ? "findAllProdutosToApprov" : "findAllProdutos";
+
     var getProductsRequest = new ProwebRequest();
-    getProductsRequest.url = GATEWAY+"?controller=Produto&method=findAllProdutos";
+    getProductsRequest.url = GATEWAY+"?controller=Produto&method="+method;
     getProductsRequest.debugResult = true;
 
     sendingForm = new ProwebForm();
@@ -445,7 +465,7 @@ function ProdutoController(){
     }
 
     loadAutoField = function(autoData){
-        
+        console.log(autoData);
         try{
             let fields = JSON.parse(autoData[0].valor.replace(/&quot;/g,"\""));
             
@@ -592,3 +612,23 @@ function actualizar(){
     }
 }
 //productNavigation
+
+
+function approvProduct(id){
+
+    let request = new ProwebRequest();
+    request.url = GATEWAY+"?controller=Produto&method=approve&field[Produto.id]="+id;
+    request.debugResult = true;
+    request.requestLoading("productFormModal");
+    request.post(null,null,function(r){
+        
+        let result = JSON.parse(r);
+        if(result.success == true){
+            request.requestClearLoading();
+            document.getElementById('approvingProduct'+id).style.display = "none";
+        }
+
+    });
+    
+
+}

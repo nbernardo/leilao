@@ -72,10 +72,18 @@ class ProdutoDTO extends AbstractDTO {
         return $this;
     }
 
+    public function approve(){
+        $queryString = "UPDATE {$this->table} SET `status` = 1 WHERE id = {$this->id}";
+        try{
+            $this->Connection()->query($queryString);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+        
+    }
 
-    public function findAllProdutos($byId = null, $show = false)
+    public function findAllProdutos($byId = null)
     {
-      //$findBy = !is_null($byId) ? " WHERE p.id = {$byId} " : "";
       try {
  
           $queryString = "
@@ -90,6 +98,36 @@ class ProdutoDTO extends AbstractDTO {
                             LEFT JOIN produtos_imagens pi
                             ON p.id = pi.fk_produto
                             WHERE p.lojaId = '".$this->getLojaId()."'
+                            GROUP BY p.nome
+                         ";
+
+          $query = $this->Connection()->query($queryString);
+          $dados = $query->fetchAll(PDO::FETCH_OBJ);
+          return $dados;
+ 
+      } catch (PDOException $e) {
+          echo $e->getMessage();
+      }
+ 
+    }
+
+
+    public function findAllProdutosToApprov($byId = null)
+    {
+      try {
+ 
+          $queryString = "
+                            SELECT 
+                                p.id, 
+                                format(p.preco,2) preco, 
+                                p.nome, 
+                                pi.imagem,
+                                p.descricao,
+                                p.fk_categoria
+                            FROM produtos p
+                            LEFT JOIN produtos_imagens pi
+                            ON p.id = pi.fk_produto
+                            WHERE p.status = 0
                             GROUP BY p.nome
                          ";
 

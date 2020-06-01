@@ -17,6 +17,20 @@ class ProdutoController extends AbstractController {
 
    }
 
+   public function approve($a){
+
+      $dto = $this->setAttributes($a)->approve();
+      echo "{\"success\": true}";
+
+   }
+
+   public function findAllProdutosToApprov(){
+      
+      $dados = self::getDTO()->findAllProdutosToApprov();
+      echo json_encode($dados);
+
+   }
+
    public function savePDFDoc($listDocs,$idProduto){
 
       $dto = new ProdutoDocumentoDTO();
