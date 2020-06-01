@@ -1,0 +1,9 @@
+Passos de instalação e deploy do chat:
+
+	1 - Instalar ou ter o PHP instalado
+
+	2 - Entrar na pasta do projecto (/portal_leilao) 
+	
+	3 - Dentro da pasta de chat executar php -S localhost:8001
+
+	4 - Ir para o browser e digitar o endereço localhost:8001
