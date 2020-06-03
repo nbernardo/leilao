@@ -248,3 +248,43 @@
     display: none;
 }
 
+
+#productDescription{
+    /*border: 1px solid;*/
+    display: flex;
+}
+
+
+#prodCarecteristica{
+    /*border: 1px solid;*/
+    flex: 3;
+    margin-left: -16px;
+    border-right: 1px solid lightgray;
+}
+
+#prodCarecteristica > div {
+    border-bottom: 1px solid lightgray;
+    width: 90%;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+#prodCarecteristica > div:last-child {
+    border-bottom: none;
+}
+
+#prodCarecteristica > div:first-child {
+    padding-top: 0;
+}
+
+
+
+.product_description{
+    padding-left: 50px;
+    flex: 4;
+}
+
+
+
+
+

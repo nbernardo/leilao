@@ -3,6 +3,7 @@
 <?php $rootPath = FacadePrincipal::pagesPath(); ?>
 <?php $produto = $facadePrincipal->produtoController()->getDTO()->findById($_GET['id']);?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

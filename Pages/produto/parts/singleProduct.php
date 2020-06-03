@@ -1,6 +1,3 @@
-<?php
-
-?>
 <div class="container">
 			<div class="row">
 
@@ -23,7 +20,10 @@
 				</div>
 
 				<!-- Descrição -->
-				<div class="col-lg-5 order-3">
+				<div class="col-lg-5 order-3" id="productDescription">
+
+					<div id="prodCarecteristica"></div>
+
 					<div class="product_description">
 						<!--
                             Categoria 
@@ -82,3 +82,22 @@
 
 			</div>
 		</div>
+
+
+		<script>
+	
+			<?php //echo $produto[0]->valor; die(); ?>
+			let prodDescription = `<?php 
+										$caracteristicas = str_replace("&quot;","\"",$produto[0]->valor);
+										echo str_replace("__autoField","", $caracteristicas); 
+									?>`; 
+			let listCaracteristicas = JSON.parse(prodDescription).campos;
+			let caracteristicaValue = "";
+
+			for(i in listCaracteristicas){
+				caracteristicaValue += `<div><b>${i}</b> : ${listCaracteristicas[i]}</div>`;
+			}
+			document.getElementById("prodCarecteristica").innerHTML = caracteristicaValue;
+
+
+		</script>
