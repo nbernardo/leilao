@@ -93,7 +93,8 @@ class ProdutoDTO extends AbstractDTO {
                                 p.nome, 
                                 pi.imagem,
                                 p.descricao,
-                                p.fk_categoria
+                                p.fk_categoria,
+                                p.status
                             FROM produtos p
                             LEFT JOIN produtos_imagens pi
                             ON p.id = pi.fk_produto

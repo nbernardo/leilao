@@ -173,12 +173,13 @@ Data table de produto do perfil logado
 
         <thead>
             <tr class="productTableImageHead">
-                <td colspan="4">Produtos cadastrados</td>
+                <td colspan="6">Produtos cadastrados</td>
             </tr>
             <tr class="productTableImageHead">
                 <td>Acções</td>
                 <td>Image</td>
                 <td>Designacao</td>
+                <td>Status</td>
                 <td>Preço min</td>
             </tr>
         </thead>

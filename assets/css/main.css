@@ -114,7 +114,7 @@
 .productTableImage {
     padding-top:5px;
     padding-bottom:5px;
-    width:162px;
+    width:130px;
 }
 
 .productTableImageHead > td {
@@ -282,6 +282,28 @@
 .product_description{
     padding-left: 50px;
     flex: 4;
+}
+
+
+.approvedProd{
+    background:green;
+    font-size: 10px;
+    display: block;
+    border-radius: 6px;
+    color:white;
+    width: 50px;
+    margin: 0 auto;
+}
+
+
+.pendingProd{
+    background: orangered;
+    font-size: 10px;
+    display: block;
+    border-radius: 6px;
+    color:white;
+    width: 50px;
+    margin: 0 auto;
 }
 
 
