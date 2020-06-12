@@ -72,3 +72,5 @@
 			</div>
 		</div>
 	</footer>
+
+	<?php require_once(FacadePrincipal::fileSystemPath()."/Pages/template/chat.php"); ?>

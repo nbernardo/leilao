@@ -138,7 +138,8 @@ function callProductModal(){
 
     let productContent = USER_PROFILE == 'ADMIN' ? 'productDataTableContainer' : 'produto_form';
 
-    setModalFeature();
+    (new ProwebForm()).setModalFeature('productForm');
+    //setModalFeature();
     productModal.setContent(document.getElementById(productContent).innerHTML);
     
     if(USER_PROFILE != "ADMIN") setupTab();
@@ -151,6 +152,7 @@ function callProductModal(){
         let reProdBtn = document.getElementsByClassName("productForm")[0];
 
         reProdBtn.getElementsByTagName("button")[0].style.display = "none";
+        reProdBtn.getElementsByTagName("button")[1].style.display = "none";
         listProdContainer.className = listProdContainer.className+" listProductToAdmin";
 
     } 
@@ -371,19 +373,6 @@ function addDocFile(_input, index){
 
 }
 
-
-function setModalFeature(){
-
-    var modalObj = document.querySelector(".productForm");
-    var modalWindow = modalObj.getElementsByClassName("tingle-modal-box")
-    modalWindow[0].style.position = "absolute";
-    modalWindow[0].style.top = "0";
-    modalWindow[0].style.left = "0";
-    modalWindow[0].style.height = "100%";
-    modalWindow[0].style.width = "35%";
-    modalWindow[0].style.borderRadius = "0px";
-
-}
 
 function removeCloseButton(){
     document.querySelector(".tingle-modal__close").style.display = "none";

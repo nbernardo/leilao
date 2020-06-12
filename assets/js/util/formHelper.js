@@ -152,6 +152,22 @@ function ProwebForm(){
     }
 
 
+    this.setModalFeature = function(modalClass){
+
+        let pmodalClass = modalClass == undefined ? "productForm" : modalClass;
+
+        var modalObj = document.querySelector("."+pmodalClass);
+        var modalWindow = modalObj.getElementsByClassName("tingle-modal-box")
+        modalWindow[0].style.position = "absolute";
+        modalWindow[0].style.top = "0";
+        modalWindow[0].style.left = "0";
+        modalWindow[0].style.height = "100%";
+        modalWindow[0].style.width = "35%";
+        modalWindow[0].style.borderRadius = "0px";
+    
+    }
+
+
     return this;
 
 }

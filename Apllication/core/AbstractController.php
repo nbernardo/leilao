@@ -171,7 +171,7 @@ abstract class AbstractController {
         $data = !is_array($object) ? "[".json_encode($object)."]" : json_encode($object);
         $result = "{\"success\":true, \"dados\":".$data."}";
 
-        echo $result;
+        echo str_replace("<br>","",$result);
         return $result;
 
     }

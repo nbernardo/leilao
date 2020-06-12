@@ -35,6 +35,10 @@ class FacadePrincipal {
       return new ProdutoController();
     }
 
+    public static function userController(){
+        return new UserController();
+    }
+
     public function produtosDto(){
       return new ProdutoDTO();
     }

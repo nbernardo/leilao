@@ -1,4 +1,3 @@
-<?php require_once(FacadePrincipal::fileSystemPath()."/Pages/template/chat.php"); ?>
 <!-- Top Bar -->
 <div class="top_bar">
     <div class="container">
@@ -14,21 +13,21 @@
                                 <a href="#" style="color:white;">Minha Conta<i class="fas fa-chevron-down"></i></a>
                                 <ul>
                                     <?php if($_SESSION['user']->tipoConta != "ADMIN"){ ?>
-                                        <li><a href="#">Perfil</a></li>
+                                        <li><a href="#" onclick="callProfileModa()">Perfil</a></li>
                                     <?php } ?>
 
                                     <?php if($_SESSION['user']->tipoConta == "VENDEDOR" || $_SESSION['user']->tipoConta == "COMPRADOR_VENDEDOR"){ ?>
                                         <li><a href="#">Loja</a></li>
-                                        <li><a href="#" onclick="callProductModal()">Produtos</a></li>
+                                        <li><a href="#" id="lkProduto" onclick="callProductModal()">Produtos comprados</a></li>
                                     <?php } ?>
                                     <li><a href="#">Leilões</a></li>
                                     
                                     <?php if($_SESSION['user']->tipoConta == "COMPRADOR"){ ?>
-                                        <li><a href="#" onclick="">Produtos</a></li>
+                                        <li><a href="#" id="lkProduto" onclick="">Cadastro de Produtos</a></li>
                                     <?php } ?>
 
                                     <?php if($_SESSION['user']->tipoConta == "ADMIN"){ ?>
-                                        <li><a href="#" onclick="callProductModal()">Produtos</a></li>
+                                        <li><a href="#" id="lkProduto" onclick="callProductModal()">Aprovar Produtos</a></li>
                                         <li><a href="#" onclick="callCategoriaModal()">Categorias</a></li>
                                     <?php } ?>
                                 </ul>

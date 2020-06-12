@@ -127,6 +127,9 @@ require_once(FacadePrincipal::assetsPath()."js/util/env.php");
 
 if($_SESSION['user']->tipoConta == "VENDEDOR")
     require_once("{$rootPath}/Pages/produto/index.php"); 
+
+if($_SESSION['user']->tipoConta == "VENDEDOR" || $_SESSION['user']->tipoConta == "COMPRADOR")
+    require_once("{$rootPath}/Pages/user/profile.php"); 
     
 if($_SESSION['user']->tipoConta == "ADMIN")
     require_once("{$rootPath}/Pages/produto/viewAdmin.php");
