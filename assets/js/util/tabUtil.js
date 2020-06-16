@@ -21,7 +21,6 @@ function ProwebTab(){
                     eval(clickEvent);
                 }
 
-
                 selectTab(curId,tabs);
             }
         }

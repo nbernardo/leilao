@@ -12,6 +12,7 @@
 
 .field-group input[type="text"],
 .field-group input[type="password"],
+.field-group input[type="datetime-local"],
 .leilaoStyle
 {
     width: 90%;
@@ -76,5 +77,11 @@
 
 .inputContent{
     width: 100%;
+}
+
+.successProcess{
+    font-weight: 500;
+    color: green;
+    display: none;
 }
 

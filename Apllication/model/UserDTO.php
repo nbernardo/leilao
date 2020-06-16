@@ -103,6 +103,39 @@ class UserDTO extends AbstractDTO {
         return $query->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function updateAccount(){
+
+        $queryString = " 
+                        UPDATE {$this->table} SET 
+                        nome = '{$this->nome}',
+                        telefone = '{$this->telefone}',
+                        email = '{$this->email}',
+                        tipoConta = '{$this->tipoConta}'
+                        WHERE id = '{$this->id}'
+                      ";
+        try{
+            $this->Connection()->query($queryString);
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+
+    }
+
+    public function updateWitImage(){
+
+    $queryString = "
+                    UPDATE {$this->table} SET
+                    nome = '{$this->nome}',
+                    telefone = '{$this->telefone}',
+                    email = '{$this->email}',
+                    tipoConta = '{$this->tipoConta}',
+                    imagemPerfil = '{$this->imagemPerfil}'
+                    WHERE id = '{$this->id}'
+                    
+                    ";
+
+    }
+
 
     /**
      * Get the value of tipoConta

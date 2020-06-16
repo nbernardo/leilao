@@ -19,9 +19,17 @@
 
 # Ficheiro JavaScript do Produto
 <?php 
-if(isset($_SESSION['user']))
+if(isset($_SESSION['user'])){
+
     echo '<script src="assets/js/productRegistration.js"></script>';
     echo '<script src="assets/js/categoriaRegistration.js"></script>';
+
+    if($_SESSION['user']->tipoConta == "ADMIN"){
+        echo '<script src="assets/js/leilaoRegistration.js"></script>';
+    }
+
+}
+
 ?>
 
 

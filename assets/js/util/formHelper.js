@@ -61,7 +61,7 @@ function ProwebForm(){
         
         for(_field of this.allFields){
             _field.value = "";
-            _field.type = "text";
+            _field.type = _field.type == "datetime-local" ? _field.type : "text";
         }     
     }
 
@@ -157,14 +157,15 @@ function ProwebForm(){
         let pmodalClass = modalClass == undefined ? "productForm" : modalClass;
 
         var modalObj = document.querySelector("."+pmodalClass);
-        var modalWindow = modalObj.getElementsByClassName("tingle-modal-box")
+        let modalWindow = modalObj.getElementsByClassName("tingle-modal-box")
         modalWindow[0].style.position = "absolute";
         modalWindow[0].style.top = "0";
         modalWindow[0].style.left = "0";
         modalWindow[0].style.height = "100%";
         modalWindow[0].style.width = "35%";
         modalWindow[0].style.borderRadius = "0px";
-    
+        
+        return modalWindow[0];
     }
 
 

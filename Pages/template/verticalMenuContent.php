@@ -64,6 +64,7 @@
                             </li>
                             <li class="hassubs">
                                 <a href="#">Páginas<i class="fas fa-chevron-down"></i></a>
+                                <!--
                                 <ul>
                                     <li><a href="shop.html">Compras<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="product.html">Produtos<i class="fas fa-chevron-down"></i></a></li>
@@ -73,8 +74,9 @@
                                     <li><a href="cart.html">Sacola<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="contact.html">Contactos<i class="fas fa-chevron-down"></i></a></li>
                                 </ul>
+                                -->
                             </li>
-                            <li><a href="contact.html">Contactos<i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="#" alt="contact.html">Contactos<i class="fas fa-chevron-down"></i></a></li>
                         </ul>
                     </div>
 

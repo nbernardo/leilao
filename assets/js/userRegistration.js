@@ -99,7 +99,7 @@ function formProcessingLoader(formId){
     _formContent = document.getElementById(formId).innerHTML;
     document.getElementById(formId).style.justifyContent = "center";
     document.getElementById(formId).innerHTML = `<div class="loader"></div>`;
-    
+    return _formContent;
 }
 
 /**
@@ -210,7 +210,9 @@ var profileModal = new tingle.modal(profileModalFeature);
 
 function callProfileModa(){
 
-    (new ProwebForm()).setModalFeature("myProfileModal");
+    let modalFeatures = (new ProwebForm()).setModalFeature("myProfileModal");
+    modalFeatures.style.width = "40%";
+
     profileModal.setContent(document.querySelector("#profile_form").innerHTML);
     profileModal.open();
     findUserInfo();
@@ -235,8 +237,10 @@ function findUserInfo(){
 
 }
 
+var userProfile = null;
 function populateUserForm(obj){
 
+    userProfile = obj;
     document.querySelector("#userName").value = obj.nome;
     document.querySelector("#userPhone").value = obj.telefone;
     document.querySelector("#tipoConta").value = obj.tipoConta;
@@ -255,14 +259,27 @@ profileModal.addFooterBtn('Actualizar', 'sendBtn', function() {
     }
 
     let updateForm = new ProwebForm();
+    
+    let imageContent = document.getElementById("User.imagemPerfil").value;
+    updateForm.addProwebField("User.imagemPerfil",imageContent);
+
     updateForm.adicionaAllFields('userUpdateInput');
-    formProcessingLoader("profile_form");
+    let formContent = formProcessingLoader("profileForm");
 
     let request = new ProwebRequest();
     request.url = "controllerGateway.php?controller=User&method=update";
     request.debugResult = true;
     request.post(null,updateForm.result, (r) => {
-        //alert(r);
+
+        document.getElementById('profileForm').innerHTML = formContent;
+        populateUserForm(userProfile);
+
+        document.querySelector('.successProfileUser').style.display = "block";
+        setInterval(() => {
+            document.querySelector('.successProfileUser').style.display = "none";
+            //console.log("apresenta");
+        },5000);
+
     });
 
 });

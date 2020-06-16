@@ -1,8 +1,7 @@
-var productTable = null; //Data table dos produtos
 var productController = {editingStatus:false};
 const prodValidateInput = "produtoInput";
 
-modalFeatures = {
+modalProductFeatures = {
     footer: true,
     stickyFooter: false,
     closeMethods: [],
@@ -14,21 +13,26 @@ modalFeatures = {
     },
     onClose: function() {
         removeDefaultButtons();
-        productModal.setContent("");
+        productRegistration.productModal.setContent("");
     },
     beforeClose: function() {
         return true; // close the modal
     }
 };
 
-var productModal = new tingle.modal(modalFeatures);
+
+productRegistration = {
+    productModal: new tingle.modal(modalProductFeatures),
+    productTable: new ProwebTable(),
+}
 
 function addEditButton(){
+
+    let productModal = productRegistration.productModal;
 
     if(productController.editingStatus == false){
 
         productModal.addFooterBtn('Actualizar', 'sendBtn productUpButton', function() {
-            //alert("Actualizando");
             actualizar();
         });
     
@@ -42,8 +46,10 @@ function addEditButton(){
 
 }
 
+
 function addDefaultButtons(){
 
+    let productModal = productRegistration.productModal;
     productModal.addFooterBtn('Cadastrar', 'sendBtn productRegButton', function() {
         registerProduct();
     });
@@ -105,15 +111,6 @@ function registerProduct(){
 
 }
 
-
-function generateTableRows(dataString){
-
-    productTable = new ProwebTable();
-    productTable.tableId = "productList";
-    productTable.generateTableRows(dataString);
-
-}
-
 function onRegisterSuccess(result){
     //alert(result);
     
@@ -125,60 +122,14 @@ function onRegisterSuccess(result){
             resultado.lastData["mainImage"] = firstImage;            
         }catch(e){}
 
-        let row = productTable.createProductRow(resultado.lastData);
-        productTable.addRow(row);
+        let row = productRegistration.productTable.createProductRow(resultado.lastData);
+        productRegistration.productTable.addRow(row);
         prodCreateForm.clearAllFields();
         l('#documentList').innerHTML = "";
 
     }
 }
 
-
-function callProductModal(){
-
-    let productContent = USER_PROFILE == 'ADMIN' ? 'productDataTableContainer' : 'produto_form';
-
-    (new ProwebForm()).setModalFeature('productForm');
-    //setModalFeature();
-    productModal.setContent(document.getElementById(productContent).innerHTML);
-    
-    if(USER_PROFILE != "ADMIN") setupTab();
-    
-    productModal.open();
-    
-    if(USER_PROFILE == "ADMIN"){
-
-        let listProdContainer = document.querySelectorAll(".tingle-modal-box__content")[1];
-        let reProdBtn = document.getElementsByClassName("productForm")[0];
-
-        reProdBtn.getElementsByTagName("button")[0].style.display = "none";
-        reProdBtn.getElementsByTagName("button")[1].style.display = "none";
-        listProdContainer.className = listProdContainer.className+" listProductToAdmin";
-
-    } 
-
-    loadProducts();
-
-    if(USER_PROFILE != "ADMIN"){
-        addFooterDatatable();
-        
-        let prowebForm = new ProwebRequest();
-        prowebForm.formRenderPlace = "prodCaracteristicas";
-        prowebForm.loadFormTo("carro");
-    }
-
-
-}
-
-function addFooterDatatable(){
-    
-    var modalObj = document.querySelector(".productForm");
-    if(!document.getElementById("listProductContainer")){
-        modalFooter = modalObj.querySelector(".tingle-modal-box");
-        modalFooter.appendChild(createProductTable());
-    }
-
-}
 
 function reverseImagesOrder(imagesArray){
     images = [];
@@ -401,7 +352,7 @@ function setupTab(){
 
 function createProductTable(){
     
-    tableCont = document.querySelector("#productDataTableContainer").innerHTML;
+    tableCont = document.querySelector("#leilaoDataTableContainer").innerHTML;
     newTableContainer = document.createElement("div");
     newTableContainer.id = "listProductContainer";
     newTableContainer.innerHTML = tableCont;
@@ -409,24 +360,6 @@ function createProductTable(){
     return newTableContainer;
 
 }
-
-function loadProducts(data){
-
-    let method = USER_PROFILE == "ADMIN" ? "findAllProdutosToApprov" : "findAllProdutos";
-
-    var getProductsRequest = new ProwebRequest();
-    getProductsRequest.url = GATEWAY+"?controller=Produto&method="+method;
-    getProductsRequest.debugResult = true;
-
-    sendingForm = new ProwebForm();
-    sendingForm.addProwebField("Produto.id");
-
-    getProductsRequest.get(null,null,function(dt){
-        generateTableRows(dt);
-    });
-
-}
-
 
 
 function ProdutoController(){

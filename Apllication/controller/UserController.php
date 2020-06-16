@@ -14,11 +14,15 @@ class UserController extends AbstractController {
     public function update($a){
 
         $dto = $this->setAttributes($a);
-        $dto->update();
-        self::dd($dto);
 
+        if($dto->getImagemPerfil() != "")
+            $dto->updateWitImage();
+        else
+            $dto->updateAccount();
+        //self::dd($dto);
         echo "Actualizando";
     }
+
 
     public function save($a)
     {

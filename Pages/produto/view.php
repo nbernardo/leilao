@@ -110,8 +110,10 @@ require_once(FacadePrincipal::assetsPath()."js/util/env.php");
 
 # Ficheiro JavaScript do Produto
 <?php 
-if(isset($_SESSION['user']))
+if(isset($_SESSION['user'])){
     echo '<script src="../../assets/js/productRegistration.js"></script>';
+    echo '<script src="../../assets/js/adminView.js"></script>';
+}   
 ?>
 
 </body>
